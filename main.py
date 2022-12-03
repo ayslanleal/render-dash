@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 import pandas as pd
 
 app = Dash(__name__)
+server = app.server
 
 app.layout = html.Div([
     html.H1('Relatório Socioterritorial'),
