@@ -68,4 +68,4 @@ def generate_chart(value):
     return fig
 
 
-app.run_server(debug=True)
+#app.run_server(debug=True)
