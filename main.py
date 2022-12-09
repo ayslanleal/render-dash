@@ -170,5 +170,3 @@ def generate_chart_map(value):
 
     return fig
 
-
-app.run_server(debug=True)
