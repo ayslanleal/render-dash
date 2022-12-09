@@ -164,7 +164,7 @@ def generate_chart_map(value):
     fig.update_layout(mapbox_style="open-street-map")
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
     fig.update_layout(legend=dict(bgcolor='rgba(0,0,0,0)'))
-    #fig.update_layout(legend_title="")
+    fig.update_layout(legend_title="")
     #fig.layout = go.Layout()
 
 
