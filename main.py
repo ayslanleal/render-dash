@@ -99,7 +99,7 @@ app.layout = html.Div(className='app-body', children=[
                             'Frequência de Varrição da Rua',
                             'Bem da Arborização', 'Origem da Água', 'Falta de Água', 'Meio de Transportes',
                             'Satisfação Vida', 'Satisfação Governo', 'Sistema de Drenagem', 'Esgotamento Sanitário'],
-                         value='Etnia/Raça',
+                         value=[],
                          ),
         ]),
     ]),
@@ -146,20 +146,21 @@ def generate_chart_map(value):
     df.fillna('', inplace=True)
     flag = rename_titles(value)
 
-    columns = df[flag].apply(lambda x: pd.Series(x.split('|')).fillna(''))
+    columns = df[flag].apply(lambda x: pd.  Series(x.split('|')))
     geo = df[['posLat', 'posLon']].join(columns)
     list_dataframes = []
     for index in range(len(geo.iloc[:, 2:].columns)):
         select = geo[['posLat', 'posLon', index]].dropna()
         select.columns = ['posLat', 'posLon', 'value']
         list_dataframes.append(select)
-
     table_consolida = pd.concat(list_dataframes)
+
+    df_map = table_consolida.drop(table_consolida[table_consolida['value'] == ''].index)
     df_map = table_consolida.value_counts().reset_index()
     df_map.columns = ['posLat', 'posLon', 'value','cnt']
+    print(df_map['value'].value_counts())
 
-
-    fig = px.scatter_mapbox(df_map, lat="posLat", lon="posLon",color='value',size='cnt',zoom=12)
+    fig = px.scatter_mapbox(df_map, lat="posLat", lon="posLon",color=df_map['value'].unique(),size='cnt',zoom=12)
     #fig.update_traces(cluster=dict(enabled=True))
     fig.update_layout(mapbox_style="open-street-map")
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
