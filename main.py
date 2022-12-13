@@ -24,6 +24,9 @@ select_filtered_md_template = '{:,} entrevistas selecionadas'
 select_interviews = select_filtered_md_template.format(len(df_head))
 
 def rename_titles(value):
+    if value == []:
+        return ''
+
     options = ['map_Cat_via', 'map_Sit_pav', 'map_Sit_urb', 'map_Cal_Pass',
                'map_Ilu_Pub', 'map_Arb', 'ident_Sex_ide', 'ident_Natura',
                'ident_Fax_Eta', 'ident_Et_Raça', 'ident_Est_Civ', 'ident_Est_Esc',
@@ -106,7 +109,8 @@ app.layout = html.Div(className='app-body', children=[
 
     html.Div(className="row", children=[
     html.Div(className="seven columns pretty_container", children=[
-            dcc.Graph(id='geomap_figure'),
+            #dcc.Graph(id='geomap_figure'),
+            dcc.Loading(id = "loading-icon", children=[html.Div(dcc.Graph(id='geomap_figure'))], type="default")
         ]),
         html.Div(className="five columns pretty_container", children=[
             dcc.Graph(id='graph'),
@@ -164,7 +168,7 @@ def generate_chart_map(value):
     #fig.update_traces(cluster=dict(enabled=True))
     fig.update_layout(mapbox_style="open-street-map")
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
-    fig.update_layout(legend=dict(bgcolor='rgba(0,0,0,0)'))
+    fig.update_layout(legend=dict(bgcolor='rgba(0,0,0,0)', xanchor='center', y=1,x= 0.1))
     fig.update_layout(legend_title="")
     #fig.layout = go.Layout()
 
