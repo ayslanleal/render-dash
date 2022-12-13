@@ -158,9 +158,9 @@ def generate_chart_map(value):
     df_map = table_consolida.drop(table_consolida[table_consolida['value'] == ''].index)
     df_map = table_consolida.value_counts().reset_index()
     df_map.columns = ['posLat', 'posLon', 'value','cnt']
-    print(df_map['value'].value_counts())
 
-    fig = px.scatter_mapbox(df_map, lat="posLat", lon="posLon",color=df_map['value'].unique(),size='cnt',zoom=12)
+
+    fig = px.scatter_mapbox(df_map, lat="posLat", lon="posLon",color='value',size='cnt',zoom=12)
     #fig.update_traces(cluster=dict(enabled=True))
     fig.update_layout(mapbox_style="open-street-map")
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
@@ -171,3 +171,4 @@ def generate_chart_map(value):
 
     return fig
 
+#app.run_server(debug=True)
