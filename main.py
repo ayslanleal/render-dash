@@ -107,13 +107,17 @@ app.layout = html.Div(className='app-body', children=[
     ]),
 
     html.Div(className="row", children=[
-    html.Div(className="seven columns pretty_container", children=[
+    html.Div(className="twelve columns pretty_container", children=[
+            dcc.Graph(id='graph'),
+        ])
+    ]),
+    
+    html.Div(className="row", children=[
+    html.Div(className="twelve columns pretty_container", children=[
             #dcc.Graph(id='geomap_figure'),
             dcc.Loading(id = "loading-icon", children=[html.Div(dcc.Graph(id='geomap_figure'))], type="default")
         ]),
-        html.Div(className="five columns pretty_container", children=[
-            dcc.Graph(id='graph'),
-        ])
+
     ]),
 
     html.Hr()
@@ -133,11 +137,14 @@ def generate_chart(value):
 
     labels = map_func.keys()
     values = map_func.values
-    fig = go.Figure(data=[go.Pie(values=values,labels=labels, hole=.3)])
+    fig = go.Figure(data=[go.Pie(values=values,labels=labels, hole=.3,legendwidth=1)])
+    fig.layout = go.Layout(**fig_layout_defaults)
     fig.update_layout(title={
         'text': f'{value}'},title_x=0.5)
+    
+    fig.update_layout(legend=dict(bgcolor='rgba(0,0,0,0)',font=dict(size= 13), x=0.8))
+    #fig.update_layout(margin={"r": 120, "t": 0, "l": 0, "b": 0})
 
-    fig.layout = go.Layout(**fig_layout_defaults)
     return fig
 
 @app.callback(
